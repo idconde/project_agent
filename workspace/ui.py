@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import messagebox
 from utils import calculate_factorial
 
 class FactorialApp:
@@ -7,20 +7,18 @@ class FactorialApp:
         self.root = tk.Tk()
         self.root.title("Factorial Calculator")
         self.root.geometry("300x200")
+        self.root.resizable(False, False)
         
-        self.input_field = None
-        self.result_label = None
-        
-        self.setup_gui()
+        self.setup_ui()
     
-    def setup_gui(self):
-        # Input field
-        input_frame = tk.Frame(self.root)
-        input_frame.pack(pady=10)
+    def setup_ui(self):
+        # Input label
+        input_label = tk.Label(self.root, text="Enter a number:")
+        input_label.pack(pady=10)
         
-        tk.Label(input_frame, text="Enter a number:").pack()
-        self.input_field = tk.Entry(input_frame, width=20)
-        self.input_field.pack(pady=5)
+        # Input field
+        self.entry = tk.Entry(self.root, width=20)
+        self.entry.pack(pady=5)
         
         # Calculate button
         calculate_button = tk.Button(self.root, text="Calculate", command=self.calculate_factorial)
@@ -32,18 +30,13 @@ class FactorialApp:
     
     def calculate_factorial(self):
         try:
-            input_value = self.input_field.get().strip()
+            input_text = self.entry.get().strip()
             
-            if not input_value:
-                self.result_label.config(text="Please enter a number")
+            if not input_text:
+                self.result_label.config(text="Error: Please enter a number")
                 return
             
-            number = int(input_value)
-            
-            if number < 0:
-                self.result_label.config(text="Error: Factorial is not defined for negative numbers")
-                return
-            
+            number = int(input_text)
             result = calculate_factorial(number)
             self.result_label.config(text=f"Factorial of {number} is: {result}")
             

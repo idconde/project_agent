@@ -1,8 +1,7 @@
+#!/usr/bin/env python3
+
 from ui import FactorialApp
 
-def main():
+if __name__ == "__main__":
     app = FactorialApp()
     app.run()
-
-if __name__ == "__main__":
-    main()

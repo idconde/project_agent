@@ -5,6 +5,9 @@ def calculate_factorial(n):
     if n < 0:
         raise ValueError("Factorial is not defined for negative numbers")
     
+    if n > 100:
+        raise ValueError("Number too large to calculate factorial")
+    
     if n == 0 or n == 1:
         return 1
     
