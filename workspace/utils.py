@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+"""
+Utility functions for the Factorial Calculator application.
+"""
+
 def calculate_factorial(n):
     """
     Calculate the factorial of a given number.
@@ -6,23 +11,24 @@ def calculate_factorial(n):
         n (int): The number to calculate factorial for
         
     Returns:
-        int or str: The factorial result or an error message
+        int: The factorial of n
+        
+    Raises:
+        ValueError: If n is negative
+        TypeError: If n is not an integer
     """
-    
     # Input validation
     if not isinstance(n, int):
-        return "Input must be an integer"
+        raise TypeError("Input must be an integer")
     
     if n < 0:
-        return "Factorial is not defined for negative numbers"
+        raise ValueError("Factorial is not defined for negative numbers")
     
-    if n > 100:
-        return "Number too large (maximum allowed: 100)"
-    
-    # Calculate factorial iteratively
+    # Handle special cases
     if n == 0 or n == 1:
         return 1
     
+    # Calculate factorial iteratively
     result = 1
     for i in range(2, n + 1):
         result *= i
