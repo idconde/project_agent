@@ -1,15 +1,7 @@
-#!/usr/bin/env python3
-"""
-Entry point for the Factorial Calculator application.
-"""
-
-from ui import FactorialCalculatorGUI
+from ui import FactorialCalculatorApp
 
 def main():
-    """
-    Main function to start the factorial calculator application.
-    """
-    app = FactorialCalculatorGUI()
+    app = FactorialCalculatorApp()
     app.run()
 
 if __name__ == "__main__":

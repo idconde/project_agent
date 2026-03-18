@@ -1,88 +1,60 @@
-#!/usr/bin/env python3
-"""
-GUI logic for the Factorial Calculator application.
-"""
-
 import tkinter as tk
-from tkinter import ttk
+from tkinter import messagebox
 from utils import calculate_factorial
 
-class FactorialCalculatorGUI:
-    """
-    GUI class for the factorial calculator application.
-    """
-    
+class FactorialCalculatorApp:
     def __init__(self):
-        """
-        Initialize the GUI components and window.
-        """
         self.root = tk.Tk()
         self.root.title("Factorial Calculator")
-        self.root.geometry("400x200")
+        self.root.geometry("300x200")
         self.root.resizable(False, False)
         
-        self.setup_components()
+        self.setup_ui()
     
-    def setup_components(self):
-        """
-        Set up all GUI components and their layout.
-        """
-        # Main frame
-        main_frame = ttk.Frame(self.root, padding="20")
-        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-        
-        # Input label
-        input_label = ttk.Label(main_frame, text="Enter a number:")
-        input_label.grid(row=0, column=0, pady=(0, 10), sticky=tk.W)
+    def setup_ui(self):
+        # Input field label
+        input_label = tk.Label(self.root, text="Enter a number:", font=("Arial", 12))
+        input_label.pack(pady=10)
         
         # Input field
-        self.number_entry = ttk.Entry(main_frame, width=20, font=('Arial', 12))
-        self.number_entry.grid(row=1, column=0, pady=(0, 20), sticky=(tk.W, tk.E))
+        self.number_entry = tk.Entry(self.root, font=("Arial", 12), width=20, justify="center")
+        self.number_entry.pack(pady=5)
+        self.number_entry.bind("<Return>", lambda event: self.calculate_button_click())
         
         # Calculate button
-        self.calculate_button = ttk.Button(main_frame, text="Calculate", command=self.calculate_factorial)
-        self.calculate_button.grid(row=2, column=0, pady=(0, 20))
+        calculate_button = tk.Button(self.root, text="Calculate", font=("Arial", 12), 
+                                   command=self.calculate_button_click, bg="lightblue")
+        calculate_button.pack(pady=10)
         
         # Result label
-        self.result_label = ttk.Label(main_frame, text="Result will appear here", font=('Arial', 10), wraplength=350)
-        self.result_label.grid(row=3, column=0, pady=(0, 10), sticky=(tk.W, tk.E))
-        
-        # Configure grid weights
-        self.root.columnconfigure(0, weight=1)
-        self.root.rowconfigure(0, weight=1)
-        main_frame.columnconfigure(0, weight=1)
-        
-        # Bind Enter key to calculate button
-        self.root.bind('<Return>', lambda event: self.calculate_factorial())
+        self.result_label = tk.Label(self.root, text="", font=("Arial", 12), 
+                                   wraplength=280, justify="center")
+        self.result_label.pack(pady=10)
     
-    def calculate_factorial(self):
-        """
-        Handle the calculate button click event.
-        """
+    def calculate_button_click(self):
         try:
-            # Get input from entry field
-            input_text = self.number_entry.get().strip()
+            # Get input value
+            input_value = self.number_entry.get().strip()
             
-            if not input_text:
-                self.result_label.config(text="Error: Please enter a number")
+            if not input_value:
+                self.result_label.config(text="Please enter a number", fg="red")
                 return
             
             # Convert to integer
-            number = int(input_text)
+            number = int(input_value)
             
             # Calculate factorial
             result = calculate_factorial(number)
             
-            # Display result
-            self.result_label.config(text=f"Factorial of {number} is: {result}")
-            
+            if isinstance(result, str):  # Error message
+                self.result_label.config(text=result, fg="red")
+            else:
+                self.result_label.config(text=f"Factorial of {number} is: {result}", fg="green")
+                
         except ValueError:
-            self.result_label.config(text="Error: Please enter a valid integer")
+            self.result_label.config(text="Invalid input. Please enter a valid integer.", fg="red")
         except Exception as e:
-            self.result_label.config(text=f"Error: {str(e)}")
+            self.result_label.config(text=f"An error occurred: {str(e)}", fg="red")
     
     def run(self):
-        """
-        Start the GUI application main loop.
-        """
         self.root.mainloop()
