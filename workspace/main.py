@@ -2,6 +2,9 @@
 
 from ui import FactorialApp
 
-if __name__ == "__main__":
+def main():
     app = FactorialApp()
     app.run()
+
+if __name__ == "__main__":
+    main()

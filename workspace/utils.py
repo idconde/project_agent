@@ -1,13 +1,25 @@
 def calculate_factorial(n):
+    """
+    Calculate the factorial of a given number.
+    
+    Args:
+        n (int): The number to calculate factorial for
+        
+    Returns:
+        int or str: The factorial result or an error message
+    """
+    
+    # Input validation
     if not isinstance(n, int):
-        raise ValueError("Input must be an integer")
+        return "Input must be an integer"
     
     if n < 0:
-        raise ValueError("Factorial is not defined for negative numbers")
+        return "Factorial is not defined for negative numbers"
     
     if n > 100:
-        raise ValueError("Number too large to calculate factorial")
+        return "Number too large (maximum allowed: 100)"
     
+    # Calculate factorial iteratively
     if n == 0 or n == 1:
         return 1
     
